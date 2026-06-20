@@ -163,7 +163,7 @@ img{max-width:100%;display:block}
 .footer-inner{display:grid;grid-template-columns:1.6fr repeat(5,1fr);gap:38px}
 .footer-brand p{font-size:11px;line-height:1.9;color:#555;font-weight:700;margin:26px 0 20px}
 .socials{display:flex;gap:12px}
-.socials a{width:28px;height:28px;border:1px solid #bdbdbd;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#555;font-weight:900}
+.socials a,.socials span{width:28px;height:28px;border:1px solid #bdbdbd;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#555;font-weight:900}
 .footer-column h3{font-size:12px;margin:8px 0 18px;font-weight:950;white-space:nowrap}
 .footer-column a{display:block;font-size:11px;line-height:2.35;color:#444;font-weight:700}
 .footer-bottom{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:#555;font-size:11px;font-weight:700}
