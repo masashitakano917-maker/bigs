@@ -9,7 +9,7 @@ const siteHeader = `
         <a href="./people.html">働く人を知る</a><a href="./recruit.html">採用情報</a>
         <a href="./box.html">宅配ボックス購入</a><a class="nav-button" href="./contact.html">お問い合わせ</a>
       </nav>
-      <button class="menu-button" type="button" aria-label="メニューを開く"><span></span><span></span></button>
+      <button class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false"><span></span><span></span></button>
     </div>
   </header>`;
 
@@ -30,5 +30,20 @@ document.querySelector('[data-site-header]')?.replaceWith(document.createRange()
 document.querySelector('[data-site-footer]')?.replaceWith(document.createRange().createContextualFragment(siteFooter));
 const menuButton = document.querySelector('.menu-button');
 const nav = document.querySelector('.global-nav');
-menuButton?.addEventListener('click', () => { nav.classList.toggle('is-open'); menuButton.classList.toggle('is-open'); });
-
+const closeMenu = () => {
+  nav?.classList.remove('is-open');
+  menuButton?.classList.remove('is-open');
+  menuButton?.setAttribute('aria-expanded', 'false');
+  menuButton?.setAttribute('aria-label', 'メニューを開く');
+  document.body.classList.remove('menu-open');
+};
+menuButton?.addEventListener('click', () => {
+  const isOpen = !nav?.classList.contains('is-open');
+  nav?.classList.toggle('is-open', isOpen);
+  menuButton.classList.toggle('is-open', isOpen);
+  menuButton.setAttribute('aria-expanded', String(isOpen));
+  menuButton.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+  document.body.classList.toggle('menu-open', isOpen);
+});
+nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
