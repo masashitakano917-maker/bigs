@@ -14,4 +14,15 @@
 .contact-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:54px}.contact-note{background:#111;color:#fff;padding:34px}.contact-note p{font-size:13px;line-height:1.9}.form-row{margin-bottom:22px}.form-row label{display:block;font-size:12px;font-weight:900;margin-bottom:9px}.form-row input,.form-row select,.form-row textarea{width:100%;border:1px solid #ccc;padding:14px;font:inherit;background:#fff}.form-row textarea{min-height:160px;resize:vertical}.form-check{display:flex;gap:9px;align-items:flex-start;font-size:12px;margin:24px 0}.form-check input{margin-top:3px}.form-message{display:none;padding:15px;background:#edf8ef;font-size:13px;margin-top:18px}.form-message.is-visible{display:block}
 .cta-band{max-width:var(--max);margin:auto;padding:58px;display:flex;justify-content:space-between;align-items:center;gap:30px;background:#dff4ff}.cta-band h2{margin:0;font-size:26px}.notice{padding:18px;background:#fff7df;border-left:4px solid #e9b949;font-size:12px;line-height:1.8}
 @media(max-width:760px){.page-hero{padding:64px 24px 48px}.page-hero h1{font-size:36px}.page-section{padding:54px 24px}.feature-grid,.service-list,.profile-grid,.step-list,.product-layout,.contact-grid{grid-template-columns:1fr}.cta-band{padding:42px 24px;display:block}.cta-band .black-button{margin-top:24px}}
-
+@media(max-width:560px){
+  .breadcrumb{padding:14px 20px;white-space:nowrap;overflow-x:auto}
+  .page-hero{padding:50px 20px 42px}.page-hero::after{width:220px;height:220px;right:-110px;top:-90px}.page-hero h1{font-size:clamp(31px,10vw,38px);line-height:1.25;margin-bottom:18px}.page-hero p:last-child{font-size:13px;line-height:1.85}
+  .page-section{padding:46px 20px;scroll-margin-top:72px}.page-section h2{font-size:26px;margin-bottom:22px}.lead{font-size:15px}.body-copy{font-size:13px}
+  .feature-grid,.service-list,.step-list{gap:14px}.feature-card,.service-item,.step{padding:24px;min-height:0}.service-item .black-button{max-width:none}
+  .profile-grid{gap:34px}.profile-card h3{font-size:17px}
+  .product-layout{gap:28px}.product-layout img{aspect-ratio:4/3}.price{font-size:24px;line-height:1.45}
+  .spec-table,.spec-table tbody{display:block}.spec-table tr{display:block;padding:14px 0;border-bottom:1px solid var(--line)}.spec-table th,.spec-table td{display:block;width:100%;padding:4px 0;border:0;line-height:1.7}.spec-table th{font-size:11px}.spec-table td{font-size:13px}
+  .faq details{padding:20px 0}.faq summary{font-size:14px;line-height:1.65;padding-right:4px}.faq p{padding-left:0}
+  .contact-grid{gap:30px}.contact-note{padding:26px}.form-row input,.form-row select,.form-row textarea{font-size:16px;border-radius:0;min-height:48px}.form-check{font-size:13px;line-height:1.6}.contact-grid button{max-width:none}
+  .cta-band{padding:38px 20px}.cta-band h2{font-size:22px;line-height:1.55}
+}
