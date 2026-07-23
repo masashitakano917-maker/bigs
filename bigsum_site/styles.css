@@ -37,9 +37,9 @@ img{max-width:100%;display:block}
   justify-content:space-between;
   padding:0 22px;
 }
-.logo{display:inline-flex;flex-direction:column;gap:2px;line-height:1;color:#101010}
-.logo-main{font-size:28px;font-weight:900;letter-spacing:.08em}
-.logo-sub{font-size:9px;font-weight:700;letter-spacing:.04em;color:#333}
+.logo{display:inline-flex;align-items:center;line-height:1;color:#101010}
+.logo-image{width:164px;height:auto;display:block}
+.site-footer .logo-image{width:190px}
 .global-nav{display:flex;align-items:center;gap:32px;font-size:13px;font-weight:700;white-space:nowrap}
 .global-nav a:not(.nav-button){position:relative}
 .global-nav a:not(.nav-button)::after{content:"";position:absolute;left:0;bottom:-8px;width:0;height:1px;background:#111;transition:.25s}
@@ -195,7 +195,7 @@ img{max-width:100%;display:block}
   .footer-brand{grid-column:1/-1}
 }
 @media (max-width: 560px){
-  .logo-main{font-size:24px}.logo-sub{font-size:8px}
+  .logo-image{width:142px}.site-footer .logo-image{width:166px}
   .header-inner{padding:0 16px}
   .hero{height:auto;background:#f6f7f3;display:flex;flex-direction:column}
   .hero-photo{position:relative;order:2;width:100%;height:clamp(320px,90vw,430px);top:auto;right:auto;object-position:62% center}
