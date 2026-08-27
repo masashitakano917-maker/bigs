@@ -112,6 +112,7 @@ img{max-width:100%;display:block}
 .stat-item strong{font-size:34px;line-height:1;font-weight:900;letter-spacing:.04em}
 .stat-item strong span{font-size:15px;margin-left:4px}
 .stat-item small{font-size:11px;font-weight:800;margin-top:8px;color:#565656}
+.stat-item.wide strong{font-size:clamp(24px,2.1vw,30px);letter-spacing:.02em;white-space:nowrap}
 .work{max-width:var(--max);margin:0 auto;padding:66px 22px 82px}
 .section-heading{text-align:center;margin-bottom:32px}
 .section-heading p,.tag{margin:0 0 12px;font-size:11px;font-weight:900;letter-spacing:.12em;color:#343434}
