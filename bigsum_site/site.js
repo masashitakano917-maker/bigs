@@ -22,7 +22,7 @@ const siteFooter = `
       <div class="footer-column"><h3>宅配ボックス購入</h3><a href="./box.html#about">BIGSUM BOXとは</a><a href="./box.html#products">商品一覧</a><a href="./box.html#guide">ご利用ガイド</a><a href="./box.html#faq">よくある質問</a></div>
       <div class="footer-column"><h3>お問い合わせ</h3><a href="./contact.html">お問い合わせフォーム</a></div>
     </div>
-    <div class="footer-bottom"><small>© BIGSUM Co., Ltd.</small><div><a href="./privacy.html">プライバシーポリシー</a><a href="./legal.html">特定商取引法に基づく表記</a></div></div>
+    <div class="footer-bottom"><small>© 合同会社Big Sum</small><div><a href="./privacy.html">プライバシーポリシー</a><a href="./legal.html">特定商取引法に基づく表記</a></div></div>
   </footer>`;
 
 document.querySelector('[data-site-header]')?.replaceWith(document.createRange().createContextualFragment(siteHeader));
