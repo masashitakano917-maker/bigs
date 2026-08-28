@@ -138,7 +138,7 @@ img{max-width:100%;display:block}
   max-width:var(--max);
   margin:0 auto;
   display:grid;
-  grid-template-columns:48% 52%;
+  grid-template-columns:42% 58%;
   min-height:365px;
   overflow:hidden;
   background:var(--cream);
