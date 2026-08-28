@@ -9,7 +9,6 @@ BIGSUM風サイトテンプレート
 - index.html: トップページ
 - about.html: 会社情報
 - services.html: 配送サービス
-- people.html: 働く人・インタビュー
 - recruit.html: 採用情報
 - box.html / product.html: 宅配ボックス・商品詳細
 - contact.html: お問い合わせ
