@@ -5,6 +5,7 @@ const siteHeader = `
         <img class="logo-image" src="./assets/bigsum_logo.png" alt="BIGSUM" width="2253" height="342" />
       </a>
       <nav class="global-nav" aria-label="グローバルナビゲーション">
+        <a href="./index.html">TOP</a>
         <a href="./about.html">私たちについて</a><a href="./services.html">サービス</a>
         <a href="./recruit.html">採用情報</a>
         <a href="./box.html">宅配ボックス購入</a><a class="nav-button" href="./contact.html">お問い合わせ</a>
