@@ -110,11 +110,11 @@ export async function onRequestPost({ request, env }) {
 
   const customerHtml = emailShell(`
     <p style="margin:0 0 8px;color:#777;font-size:12px;font-weight:700;letter-spacing:.12em;">THANK YOU</p>
-    <h1 style="margin:0 0 22px;font-size:26px;line-height:1.5;">お問い合わせありがとうございます。</h1>
+    <h1 style="margin:0 0 22px;font-size:24px;line-height:1.5;white-space:nowrap;">お問い合わせありがとうございます。</h1>
     <p style="margin:0 0 16px;font-size:15px;line-height:2;">${escapeHtml(name)} 様</p>
     <p style="margin:0 0 26px;font-size:15px;line-height:2;">合同会社Big Sumへお問い合わせいただき、誠にありがとうございます。<br>以下の内容で受け付けました。内容を確認のうえ、担当者よりご連絡いたします。</p>
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-top:2px solid #111;border-collapse:collapse;">${detailsTable(rows)}</table>
-    <p style="margin:26px 0 0;color:#777;font-size:12px;line-height:1.8;">このメールはお問い合わせフォームから自動送信されています。お心当たりがない場合は、このメールへご返信ください。</p>`);
+    <p style="margin:26px 0 0;color:#777;font-size:12px;line-height:1.8;">このメールはお問い合わせフォームから自動送信されています。お心当たりがない場合は、お手数ですがこのメールを破棄してください。</p>`);
 
   const plainRows = rows.map(([label, value]) => `${label}: ${value}`).join("\n");
   const response = await fetch("https://api.resend.com/emails/batch", {
