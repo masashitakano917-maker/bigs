@@ -23,7 +23,7 @@ const siteFooter = `
       <div class="footer-column"><h3>宅配ボックス購入</h3><a href="./box.html#about">Rakuboとは</a><a href="./box.html#inquiry">購入お問い合わせ</a></div>
       <div class="footer-column"><h3>お問い合わせ</h3><a href="./contact.html">お問い合わせフォーム</a></div>
     </div>
-    <div class="footer-bottom"><small>© 合同会社Big Sum</small><div><a href="./privacy.html">プライバシーポリシー</a><a href="./legal.html">特定商取引法に基づく表記</a></div></div>
+    <div class="footer-bottom"><small>© 合同会社Big Sum</small><div><a href="./privacy.html">プライバシーポリシー</a><a href="./legal.html" hidden>特定商取引法に基づく表記</a></div></div>
   </footer>`;
 
 document.querySelector('[data-site-header]')?.replaceWith(document.createRange().createContextualFragment(siteHeader));
