@@ -24,6 +24,11 @@ const escapeHtml = (value = "") =>
 
 const clean = (value, maxLength) => String(value ?? "").trim().slice(0, maxLength);
 const emailIsValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+const ALLOWED_HOSTNAMES = new Set([
+  "bigsumconnect.jp",
+  "www.bigsumconnect.jp",
+  "bigs-4hl.pages.dev",
+]);
 
 function originIsAllowed(request) {
   const origin = request.headers.get("origin");
@@ -38,6 +43,26 @@ function originIsAllowed(request) {
       hostname === "127.0.0.1" ||
       hostname === "localhost"
     );
+  } catch {
+    return false;
+  }
+}
+
+async function turnstileIsValid(request, token, secret) {
+  const body = new FormData();
+  body.append("secret", secret);
+  body.append("response", token);
+  const remoteIp = request.headers.get("cf-connecting-ip");
+  if (remoteIp) body.append("remoteip", remoteIp);
+
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body,
+    });
+    if (!response.ok) return false;
+    const result = await response.json();
+    return result.success === true && ALLOWED_HOSTNAMES.has(result.hostname);
   } catch {
     return false;
   }
@@ -70,13 +95,21 @@ function emailShell(content) {
 export async function onRequestPost({ request, env }) {
   if (!originIsAllowed(request)) return json({ ok: false, message: "送信元を確認できませんでした。" }, 403);
   if (!env.RESEND_API_KEY) return json({ ok: false, message: "メール送信設定が完了していません。" }, 503);
+  if (!env.TURNSTILE_SECRET_KEY) return json({ ok: false, message: "セキュリティ設定が完了していません。" }, 503);
+  if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
+    return json({ ok: false, message: "入力内容を読み取れませんでした。" }, 415);
+  }
   if (Number(request.headers.get("content-length") || 0) > 20_000) {
     return json({ ok: false, message: "入力内容が長すぎます。" }, 413);
   }
 
   let data;
   try {
-    data = await request.json();
+    const rawBody = await request.text();
+    if (new TextEncoder().encode(rawBody).byteLength > 20_000) {
+      return json({ ok: false, message: "入力内容が長すぎます。" }, 413);
+    }
+    data = JSON.parse(rawBody);
   } catch {
     return json({ ok: false, message: "入力内容を読み取れませんでした。" }, 400);
   }
@@ -88,16 +121,28 @@ export async function onRequestPost({ request, env }) {
   const name = clean(data.name, 100);
   const email = clean(data.email, 254).toLowerCase();
   const message = clean(data.message, 4000);
+  const hasValidType = Object.hasOwn(TYPE_LABELS, data.type);
   const type = TYPE_LABELS[data.type] || "お問い合わせ";
   const quantity = Math.max(1, Math.min(9999, Number.parseInt(data.quantity, 10) || 1));
+  const turnstileToken = clean(data["cf-turnstile-response"], 2048);
 
-  if (!name || !emailIsValid(email) || (kind === "general" && !message)) {
+  if (
+    !name ||
+    !emailIsValid(email) ||
+    data.privacy !== "accepted" ||
+    (kind === "general" && (!message || !hasValidType)) ||
+    !turnstileToken
+  ) {
     return json({ ok: false, message: "必須項目をご確認ください。" }, 400);
+  }
+  if (!(await turnstileIsValid(request, turnstileToken, env.TURNSTILE_SECRET_KEY))) {
+    return json({ ok: false, message: "セキュリティ確認に失敗しました。ページを再読み込みしてお試しください。" }, 403);
   }
 
   const toEmail = env.CONTACT_TO_EMAIL || "bigsum.h-umeda@outlook.jp";
   const fromEmail = env.CONTACT_FROM_EMAIL || "BigSum Web <noreply@mail.bigsumconnect.jp>";
   const inquiryTitle = kind === "purchase" ? "Rakubo購入お問い合わせ" : type;
+  const subjectName = name.replace(/[\r\n]+/g, " ");
   const rows = kind === "purchase"
     ? [["お名前", name], ["メールアドレス", email], ["購入希望数", `${quantity}点`], ["ご要望・ご質問", message || "（記入なし）"]]
     : [["お問い合わせ種別", type], ["お名前", name], ["メールアドレス", email], ["お問い合わせ内容", message]];
@@ -129,7 +174,7 @@ export async function onRequestPost({ request, env }) {
         from: fromEmail,
         to: [toEmail],
         reply_to: email,
-        subject: `【BigSum Web】${inquiryTitle}｜${name}様`,
+        subject: `【BigSum Web】${inquiryTitle}｜${subjectName}様`,
         html: adminHtml,
         text: `${inquiryTitle}を受け付けました。\n\n${plainRows}`,
       },
