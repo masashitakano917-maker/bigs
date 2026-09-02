@@ -8,6 +8,15 @@
       event.preventDefault();
       if (!form.reportValidity()) return;
 
+      const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!turnstileToken) {
+        if (result) {
+          result.textContent = "セキュリティ確認が完了していません。少し待ってから再度お試しください。";
+          result.classList.add("is-visible", "is-error");
+        }
+        return;
+      }
+
       const payload = Object.fromEntries(new FormData(form).entries());
       payload.kind = form.dataset.contactForm;
       result?.classList.remove("is-visible", "is-error");
@@ -38,6 +47,7 @@
           result.classList.add("is-visible", "is-error");
         }
       } finally {
+        window.turnstile?.reset();
         if (button) {
           button.disabled = false;
           button.textContent = defaultButtonText;
